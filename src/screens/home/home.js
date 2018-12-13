@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Alert, Input} from 'react-native';
-import { Container, Button, Header, Footer, FooterTab, 
-  Left, Body, Right, Icon, Title, Content, Text
-} from 'native-base';
+import { View } from 'react-native';
+import { Container, Button, Footer, Content, Text} from 'native-base';
 import UsersList from '../../components/home/usersList';
+
+import  UserApiService  from '../../services/userApiService'
 
 // import RNFileSelector from 'react-native-file-selector';
 
@@ -13,34 +13,20 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      users: [
-        {
-          id:'0',
-          firstName: 'Tejaswi',
-          lastName: 'Chava',
-          email:'tejaswi.chava@omniwyse.com',
-          phone: '8186869897'
-        },
-        {
-          id:'1',
-          firstName: 'Rajesh',
-          lastName: 'Chava',
-          email:'rajeshchava@gmail.com',
-          phone: '8186869897'
-        },
-        {
-          id:'2',
-          firstName: 'Anvesh',
-          lastName: 'Chava',
-          email:'anveshchava@gmail.com',
-          phone: '8186869897'
-        }
-      ],
+      users: [],
       user: {}
       
     }
+    this.getUsers();
 
   }
+
+  getUsers() {
+    UserApiService.getUsers().then((res) => this.setState({users:res})
+    );
+    
+  }
+
   addUser() {
     this.props.navigation.navigate('AddUser');
   }
