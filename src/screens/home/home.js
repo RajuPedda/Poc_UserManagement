@@ -16,14 +16,15 @@ class Home extends Component {
     this.state = {
       users: [],
       user: {}
-      
     }
-
   }
+
   componentDidMount() {
     this.getUsers();
   }
+
   getUsers() {
+
     UserApiService.getUsers().then((res) => this.setState({users:res})
     );
     
@@ -32,9 +33,10 @@ class Home extends Component {
   addUser() {
     this.props.navigation.navigate('AddUser');
   }
+
   updateUser() {
     const {user} = this.state;
-   this.props.navigation.navigate('AddUser',{'user': user});
+    this.props.navigation.navigate('AddUser',{'user': user});
   }
   onSelectUserHandler(user) {
 
@@ -66,47 +68,43 @@ class Home extends Component {
       <Container>
         <Content>
           <View>
-            <UsersList data={this.state.users}
-              onSelectUser = {(user) => this.onSelectUserHandler(user)}
-            ></UsersList>
-          </View>
 
+            <UsersList 
+              data={this.state.users}
+              onSelectUser = {(user) => this.onSelectUserHandler(user)}>
+            </UsersList>
+
+          </View>
         </Content>
-        <Footer style={styles.footerBackground}>
-            <Button
-              onPress={() => this.addUser()}
-            >
-              <Text>Add User</Text>
-            </Button>
-            <Button
-              onPress={() => this.updateUser()}
-              style={styles.buttonUpdate}
-            >
-              <Text>Update</Text>
-            </Button>
-            <Button
-              onPress={() => this.removeUser()}
-              style={styles.buttonUpdate}
-            >
-              <Text>Remove</Text>
-            </Button>
-        
+        <Footer 
+          style={styles.footerBackground}>
+
+          <Button
+            onPress={() => this.addUser()}>
+            <Text>Add User</Text>
+          </Button>
+          <Button
+            onPress={() => this.updateUser()}
+            style={styles.buttonUpdate}>
+            <Text>Update</Text>
+          </Button>
+          <Button
+            onPress={() => this.removeUser()}
+            style={styles.buttonUpdate}>
+            <Text>Remove</Text>
+          </Button>
         </Footer>
-        <Footer style={styles.footerBackground}>
-            <Button
-              onPress={() => this.importUsers()}
-              style={styles.buttonImport}
-            >
-              <Text>Import Users</Text>
-            </Button>
+
+        <Footer 
+          style={styles.footerBackground}>
+          <Button
+            onPress={() => this.importUsers()}
+            style={styles.buttonImport}>
+            <Text>Import Users</Text>
+          </Button>
         </Footer>
       </Container>
-     
-   
-      
-    )
+    )};
   }
-
-}
 
 export default Home;

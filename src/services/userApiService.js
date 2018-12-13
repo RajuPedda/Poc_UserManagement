@@ -8,8 +8,8 @@ const UserAPIService = {
       setTimeout(() => resolve(value), ms);
     });
   },
+  
   getUsers() {
-     // new: fake data
     return this.delayedResponse(500, UserData);
   }
 
