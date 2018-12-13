@@ -9,12 +9,14 @@ export default class User extends Component {
       checked: false
     }
   }
+  
   selectUser(user) {
 
     this.setState({checked: !this.state.checked});
     this.props.onSelectUser(user);
 
   }
+
   render(){
 
     const  {user} = this.props;
@@ -31,4 +33,4 @@ export default class User extends Component {
 
       </View>
     )};
-}
+  }

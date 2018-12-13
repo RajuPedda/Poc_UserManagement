@@ -66,43 +66,53 @@ class Home extends Component {
   render() {
     return(
       <Container>
+
         <Content>
+          
           <View>
 
             <UsersList 
-              data={this.state.users}
+              data         = {this.state.users}
               onSelectUser = {(user) => this.onSelectUserHandler(user)}>
             </UsersList>
 
           </View>
+
         </Content>
+
         <Footer 
-          style={styles.footerBackground}>
+          style = {styles.footerBackground}>
 
           <Button
-            onPress={() => this.addUser()}>
+            onPress = {() => this.addUser()}>
             <Text>Add User</Text>
           </Button>
+
           <Button
-            onPress={() => this.updateUser()}
-            style={styles.buttonUpdate}>
+            onPress = {() => this.updateUser()}
+            style   = {styles.buttonUpdate}>
             <Text>Update</Text>
           </Button>
+
           <Button
-            onPress={() => this.removeUser()}
-            style={styles.buttonUpdate}>
+            onPress = {() => this.removeUser()}
+            style   = {styles.buttonUpdate}>
             <Text>Remove</Text>
           </Button>
+
         </Footer>
 
         <Footer 
           style={styles.footerBackground}>
+
           <Button
-            onPress={() => this.importUsers()}
-            style={styles.buttonImport}>
+            onPress = {() => this.importUsers()}
+            style   = {styles.buttonImport}>
             <Text>Import Users</Text>
           </Button>
+
         </Footer>
+
       </Container>
     )};
   }
