@@ -76,54 +76,63 @@ class AddUser extends Component {
     return(
       <View>
         <Form>
+
           <Item>
-            <Input placeholder="Id"
-              value={this.state.user.id}
-              onChangeText={(id) => this.onChangeTextHandler('id', id)}
-            />
+            <Input 
+              placeholder  = "Id"
+              value        = {this.state.user.id}
+              onChangeText = {(id) => this.onChangeTextHandler('id', id)}/>
           </Item>
-          <Item style={styles.inputItem}>
-            <Input placeholder="First Name" value={this.state.user.firstName}
-              onChangeText={(firstName) => this.onChangeTextHandler('firstName', firstName)}
 
-            />
+          <Item style = {styles.inputItem}>
+            <Input 
+              placeholder  = "First Name" 
+              value        = {this.state.user.firstName}
+              onChangeText = {(firstName) => this.onChangeTextHandler('firstName', firstName)}/>
           </Item>
-          <Item style={styles.inputItem}>
-            <Input placeholder="Last Name"
-              value={this.state.user.lastName}
-              onChangeText={(lastName) => this.onChangeTextHandler('lastName', lastName)}
 
-            />
-          </Item>
           <Item style={styles.inputItem}>
-            <Input placeholder="Email"
-              value={this.state.user.email}
-              onChangeText={(email) => this.onChangeTextHandler('email', email)}
-            />
+            <Input 
+              placeholder  = "Last Name"
+              value        = {this.state.user.lastName}
+              onChangeText = {(lastName) => this.onChangeTextHandler('lastName', lastName)}/>
           </Item>
+
           <Item style={styles.inputItem}>
-            <Input placeholder="Phone No"
-              value={this.state.user.phone}
-              onChangeText={(phone) => this.onChangeTextHandler('phone', phone)}
+            <Input 
+              placeholder  = "Email"
+              value        = {this.state.user.email}
+              onChangeText = {(email) => this.onChangeTextHandler('email', email)}/>
+          </Item>
+
+          <Item style={styles.inputItem}>
+            <Input 
+              placeholder  = "Phone No"
+              value        = {this.state.user.phone}
+              onChangeText = {(phone) => this.onChangeTextHandler('phone', phone)}
             />
           </Item>
+
           <View style={styles.buttonContainer}>
-            <Button block style={styles.button}
-              onPress={() => this.onSaveButton()}
-            >
+
+            <Button 
+              block 
+              style   = {styles.button}
+              onPress = {() => this.onSaveButton()}>
               <Text style={styles.buttonText}>SAVE</Text>
             </Button>
-            <Button block style={styles.button}
-              onPress={() => this.OnCancelButton()}
-            >
+
+            <Button 
+              block 
+              style   = {styles.button}
+              onPress = {() => this.OnCancelButton()}>
               <Text style={styles.buttonText}>CANCEL</Text>
             </Button>
+
           </View>
 
         </Form>
       </View>
-    )
+    )};
   }
-}
-
 export default AddUser;
