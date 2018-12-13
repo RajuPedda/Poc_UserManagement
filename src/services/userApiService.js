@@ -10,11 +10,8 @@ const UserAPIService = {
   },
   
    getUsers() {
-
-    
-   
-      // new: fake data
-      return this.delayedResponse(500, [
+     // new: fake data
+    return this.delayedResponse(500, [
         {
           id:'0',
           firstName: 'Tejaswi',

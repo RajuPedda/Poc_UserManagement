@@ -24,7 +24,6 @@ onSelectUser(user) {
       keyExtractor={user => user.id.toString()}
       renderItem={this._renderItem}
     >
-
     </FlatList>
     )
   }

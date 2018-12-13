@@ -5,6 +5,7 @@ import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
 
+import {styles} from './styles'
 // import RNFileSelector from 'react-native-file-selector';
 
 class Home extends Component {
@@ -70,31 +71,30 @@ class Home extends Component {
           </View>
 
         </Content>
-        <Footer style={{backgroundColor: 'white'}}>
+        <Footer style={styles.footerBackground}>
             <Button
               onPress={() => this.addUser()}
-            
-              >
+            >
               <Text>Add User</Text>
             </Button>
             <Button
               onPress={() => this.updateUser()}
-              style={{marginLeft:10}}
+              style={styles.buttonUpdate}
             >
               <Text>Update</Text>
             </Button>
             <Button
               onPress={() => this.removeUser()}
-              style={{marginLeft:10}}
+              style={styles.buttonUpdate}
             >
               <Text>Remove</Text>
             </Button>
         
         </Footer>
-        <Footer style={{backgroundColor: 'white'}}>
+        <Footer style={styles.footerBackground}>
             <Button
               onPress={() => this.importUsers()}
-              style={{ width: 290,  justifyContent:'center'}}
+              style={styles.buttonImport}
             >
               <Text>Import Users</Text>
             </Button>

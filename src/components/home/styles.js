@@ -6,12 +6,11 @@ export const styles = StyleSheet.create({
       borderBottomColor: 'black',
       borderBottomWidth: 0.5,
       marginTop: 25,
-      
     },
-   checkBox : {
-     marginTop: 2
-   },
-   user_text: {
-     marginTop: 5
-   }
+    checkBox : {
+      marginTop: 2
+    },
+    user_text: {
+      marginTop: 5
+    }
   });
