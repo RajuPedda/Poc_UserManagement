@@ -23,7 +23,7 @@ return(
       onValueChange={() => this.selectUser(user)}
       style={styles.checkBox}
     />
-      <Text style={styles.user_text}>{user.firstName}</Text>
+      <Text style={styles.user_text}>{user.firstName}&nbsp;{user.lastName}</Text>
   </View>
 
 )
