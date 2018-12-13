@@ -18,10 +18,11 @@ class Home extends Component {
       user: {}
       
     }
-    this.getUsers();
 
   }
-
+  componentDidMount() {
+    this.getUsers();
+  }
   getUsers() {
     UserApiService.getUsers().then((res) => this.setState({users:res})
     );
