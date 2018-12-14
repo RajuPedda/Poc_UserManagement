@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Container, Button, Footer, Content, Text} from 'native-base';
+import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert,AsyncStorage} from 'react-native';
 import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
@@ -25,6 +24,10 @@ class Home extends Component {
 
   componentDidMount() {
     this.getUsers();
+    AsyncStorage.getItem('user', (err, result) => {
+      this.setState({user: JSON.parse(result)});
+      Alert.alert(this.state.user.firstName)
+    });
   }
 
   getUsers() {
@@ -57,24 +60,19 @@ class Home extends Component {
   importUsers() {
    /*  DocumentPicker.show(
       {
-        filetype: [DocumentPickerUtil.allFiles()],
-        //All type of Files DocumentPickerUtil.allFiles()
-        //Only PDF DocumentPickerUtil.pdf()
-        //Audio DocumentPickerUtil.audio()
-        //Plain Text DocumentPickerUtil.plainText()
-      },
-      (error, res) => {
-        this.setState({ fileUri: res.uri });
-        this.setState({ fileType: res.type });
-        this.setState({ fileName: res.fileName });
-        this.setState({ fileSize: res.fileSize });
- 
-        console.log('res : ' + JSON.stringify(res));
-        console.log('URI : ' + res.uri);
-        console.log('Type : ' + res.type);
-        console.log('File Name : ' + res.fileName);
-        console.log('File Size : ' + res.fileSize);
-      } */
+          title: 'Select File',
+          onDone: (path) => {
+              console.log('file selected: ' + path)
+          },
+          onCancel: () => {
+              console.log('cancelled')
+          }
+      }
+  ) */
+  AsyncStorage.getItem('user', (err, result) => {
+  this.setState({user: JSON.parse(result)});
+  Alert.alert(this.state.user.id)
+  });
   }
   render() {
     return(
