@@ -5,8 +5,8 @@ import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
 
-import {styles} from './styles'
-// import RNFileSelector from 'react-native-file-selector';
+import {styles} from './styles';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 
 class Home extends Component {
 
@@ -15,8 +15,12 @@ class Home extends Component {
 
     this.state = {
       users: [],
-      user: {}
-    }
+      user: {},
+      fileUri: '',
+      fileType: '',
+      fileName: '',
+      fileSize: ''
+    };
   }
 
   componentDidMount() {
@@ -51,17 +55,26 @@ class Home extends Component {
   }
 
   importUsers() {
-   /*  RNFileSelector.Show(
+   /*  DocumentPicker.show(
       {
-          title: 'Select File',
-          onDone: (path) => {
-              console.log('file selected: ' + path)
-          },
-          onCancel: () => {
-              console.log('cancelled')
-          }
-      }
-  ) */
+        filetype: [DocumentPickerUtil.allFiles()],
+        //All type of Files DocumentPickerUtil.allFiles()
+        //Only PDF DocumentPickerUtil.pdf()
+        //Audio DocumentPickerUtil.audio()
+        //Plain Text DocumentPickerUtil.plainText()
+      },
+      (error, res) => {
+        this.setState({ fileUri: res.uri });
+        this.setState({ fileType: res.type });
+        this.setState({ fileName: res.fileName });
+        this.setState({ fileSize: res.fileSize });
+ 
+        console.log('res : ' + JSON.stringify(res));
+        console.log('URI : ' + res.uri);
+        console.log('Type : ' + res.type);
+        console.log('File Name : ' + res.fileName);
+        console.log('File Size : ' + res.fileSize);
+      } */
   }
   render() {
     return(
