@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Container, Button, Footer, Content, Text} from 'native-base';
+import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight} from 'react-native';
 import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
 
-import {styles} from './styles'
 // import RNFileSelector from 'react-native-file-selector';
 
 class Home extends Component {
@@ -65,56 +63,99 @@ class Home extends Component {
   }
   render() {
     return(
-      <Container>
+      <View style={styles.container}>
 
-        <Content>
+        <View style= {styles.list}>
           
-          <View>
+          <UsersList 
+            data         = {this.state.users}
+            onSelectUser = {(user) => this.onSelectUserHandler(user)}>
+          </UsersList>
 
-            <UsersList 
-              data         = {this.state.users}
-              onSelectUser = {(user) => this.onSelectUserHandler(user)}>
-            </UsersList>
+        </View>
 
+
+        <View style = {styles.footer}>
+
+          <View 
+            style = {styles.footerBackground}>
+
+            <TouchableHighlight>
+
+              <Button
+              onPress = {() => this.addUser()}
+              title = "Add User" />
+
+            </TouchableHighlight>
+
+            <TouchableHighlight   style = {styles.buttonUpdate}>
+
+              <Button
+                onPress = {() => this.updateUser()}
+                title = "Update"/>
+
+            </TouchableHighlight>
+
+            <TouchableHighlight style = {styles.buttonUpdate} >
+
+              <Button
+                onPress = {() => this.removeUser()}
+                title = "Remove"/>
+
+            </TouchableHighlight>
+            
           </View>
 
-        </Content>
+          <View 
+            style={styles.footerBackground}>
 
-        <Footer 
-          style = {styles.footerBackground}>
+            <TouchableHighlight   style = {styles.buttonImport}>
+               
+              <Button
+                onPress = {() => this.importUsers()}
+                title = "Import Users">
+              </Button>
 
-          <Button
-            onPress = {() => this.addUser()}>
-            <Text>Add User</Text>
-          </Button>
+            </TouchableHighlight>
+             
+          </View>
 
-          <Button
-            onPress = {() => this.updateUser()}
-            style   = {styles.buttonUpdate}>
-            <Text>Update</Text>
-          </Button>
+      </View>
 
-          <Button
-            onPress = {() => this.removeUser()}
-            style   = {styles.buttonUpdate}>
-            <Text>Remove</Text>
-          </Button>
-
-        </Footer>
-
-        <Footer 
-          style={styles.footerBackground}>
-
-          <Button
-            onPress = {() => this.importUsers()}
-            style   = {styles.buttonImport}>
-            <Text>Import Users</Text>
-          </Button>
-
-        </Footer>
-
-      </Container>
+    </View>
     )};
   }
 
 export default Home;
+
+export const styles = StyleSheet.create({
+
+  container:{
+    flex: 1
+  },
+
+  list: {
+    flex: 0.8
+  },
+
+  footer: {
+    flex:0.2,
+  },
+
+  footerBackground: {
+    flexDirection: 'row',
+    justifyContent:'center',
+    marginTop: 10
+ 
+  },
+
+  buttonUpdate: {
+    marginLeft: 10
+  },
+
+  buttonImport: {
+    width: 250,
+    justifyContent:'center'
+  },
+
+});

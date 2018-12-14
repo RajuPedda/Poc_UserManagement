@@ -3,8 +3,10 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 
   inputItem: {
-    marginTop: 15
+    marginTop: 15,
+    marginLeft: 25
   },
+ 
 
   buttonContainer: {
     flex: 1, 

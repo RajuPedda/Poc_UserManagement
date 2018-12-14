@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Alert, CheckBox } from 'react-native';
-import { styles } from './styles';
 
 export default class User extends Component {
   constructor(props) {
@@ -34,3 +33,23 @@ export default class User extends Component {
       </View>
     )};
   }
+
+  
+export const styles = StyleSheet.create({
+
+  container : {
+    flex: 1, flexDirection: 'row',
+    borderBottomColor: 'black',
+    borderBottomWidth: 0.5,
+    marginTop: 25,
+  },
+
+  checkBox : {
+    marginTop: 2
+  },
+
+  user_text: {
+    marginTop: 5
+  }
+
+  });

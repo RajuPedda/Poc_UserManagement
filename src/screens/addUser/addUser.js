@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet,Alert } from 'react-native';
-import { Container, Header, Left, 
-  Body, Right, Button, Icon, Title, Content , 
-  Input,Item, Form, Footer, FooterTab,
-  } from 'native-base';
+import { Text, View, StyleSheet,Alert,Button,TouchableHighlight} from 'react-native';
+import { Input} from 'react-native-elements';
 import {styles} from './styles';
 
 class AddUser extends Component {
@@ -72,67 +69,64 @@ class AddUser extends Component {
     this.setState({user: {}});
     this.props.navigation.navigate('Home');
   }
+  someFunction() {}
   render() {
     return(
       <View>
-        <Form>
+        <Input 
+          placeholder  = "Id"
+          value        = {this.state.user.id}
+          onChangeText = {(id) => this.onChangeTextHandler('id', id)}
+          inputContainerStyle= {styles.inputItem}/>
 
-          <Item>
-            <Input 
-              placeholder  = "Id"
-              value        = {this.state.user.id}
-              onChangeText = {(id) => this.onChangeTextHandler('id', id)}/>
-          </Item>
+        <Input 
+          placeholder  = "First Name" 
+          value        = {this.state.user.firstName}
+          onChangeText = {(firstName) => this.onChangeTextHandler('firstName', firstName)}
+          inputContainerStyle= {styles.inputItem}/>
 
-          <Item style = {styles.inputItem}>
-            <Input 
-              placeholder  = "First Name" 
-              value        = {this.state.user.firstName}
-              onChangeText = {(firstName) => this.onChangeTextHandler('firstName', firstName)}/>
-          </Item>
+        <Input 
+          placeholder  = "Last Name"
+          value        = {this.state.user.lastName}
+          onChangeText = {(lastName) => this.onChangeTextHandler('lastName', lastName)}
+          inputContainerStyle= {styles.inputItem}/>
 
-          <Item style={styles.inputItem}>
-            <Input 
-              placeholder  = "Last Name"
-              value        = {this.state.user.lastName}
-              onChangeText = {(lastName) => this.onChangeTextHandler('lastName', lastName)}/>
-          </Item>
+        <Input 
+          placeholder  = "Email"
+          value        = {this.state.user.email}
+          onChangeText = {(email) => this.onChangeTextHandler('email', email)}
+          inputContainerStyle= {styles.inputItem}/>
 
-          <Item style={styles.inputItem}>
-            <Input 
-              placeholder  = "Email"
-              value        = {this.state.user.email}
-              onChangeText = {(email) => this.onChangeTextHandler('email', email)}/>
-          </Item>
-
-          <Item style={styles.inputItem}>
-            <Input 
-              placeholder  = "Phone No"
-              value        = {this.state.user.phone}
-              onChangeText = {(phone) => this.onChangeTextHandler('phone', phone)}
-            />
-          </Item>
-
-          <View style={styles.buttonContainer}>
+        <Input 
+          placeholder  = "Phone No"
+          value        = {this.state.user.phone}
+          onChangeText = {(phone) => this.onChangeTextHandler('phone', phone)}
+          inputContainerStyle= {styles.inputItem}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight   style = {styles.button}>
 
             <Button 
-              block 
-              style   = {styles.button}
+              title="Save" 
               onPress = {() => this.onSaveButton()}>
-              <Text style={styles.buttonText}>SAVE</Text>
             </Button>
 
-            <Button 
-              block 
-              style   = {styles.button}
-              onPress = {() => this.OnCancelButton()}>
-              <Text style={styles.buttonText}>CANCEL</Text>
-            </Button>
+          </TouchableHighlight>
 
-          </View>
+          <TouchableHighlight   style = {styles.button}>
 
-        </Form>
+           <Button 
+            title= "Cancel" 
+            style   = {styles.button}
+            onPress = {() => this.OnCancelButton()}>
+          </Button>
+
+          </TouchableHighlight>
+
+        </View>
+        
       </View>
+    
     )};
   }
 export default AddUser;
