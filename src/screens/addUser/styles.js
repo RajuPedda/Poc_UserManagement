@@ -18,7 +18,10 @@ export const styles = StyleSheet.create({
   button: {
     width: 100, 
     height: 50, 
-    marginRight: 20
+    marginRight: 20,
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 15,
   },
 
   buttonText: {

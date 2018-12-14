@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight} from 'react-native';
+import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert,AsyncStorage} from 'react-native';
 import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
@@ -19,6 +19,10 @@ class Home extends Component {
 
   componentDidMount() {
     this.getUsers();
+    AsyncStorage.getItem('user', (err, result) => {
+      this.setState({user: JSON.parse(result)});
+      Alert.alert(this.state.user.firstName)
+    });
   }
 
   getUsers() {
@@ -60,6 +64,10 @@ class Home extends Component {
           }
       }
   ) */
+  AsyncStorage.getItem('user', (err, result) => {
+  this.setState({user: JSON.parse(result)});
+  Alert.alert(this.state.user.id)
+  });
   }
   render() {
     return(
