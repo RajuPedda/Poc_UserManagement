@@ -11,6 +11,7 @@ export default class UsersList extends Component {
     this.props.onSelectUser(user);
 
   }
+  
   _renderItem = ({item}) => (
 
     <User 
@@ -21,13 +22,15 @@ export default class UsersList extends Component {
     </User>
 
   )
+
   render() {
     return(
+
     <FlatList 
       data          = {this.props.data}
       keyExtractor  = {user => user.id.toString()}
       renderItem    = {this._renderItem}>
     </FlatList>
-    )
+
+    )};
   }
-}
