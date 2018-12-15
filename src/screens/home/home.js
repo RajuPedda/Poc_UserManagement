@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight} from 'react-native';
+import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert} from 'react-native';
 import UsersList from '../../components/home/usersList';
 import UserAPIService from '../../services/userApiService';
 
@@ -39,6 +39,9 @@ class Home extends Component {
         Alert.alert(users)
     } catch(e) {
     }
+
+     UserAPIService.setStatus(true);
+    this.props.navigation.navigate('Home',{'updatedUser': user});
 }
 
   addUser() {
@@ -61,7 +64,14 @@ class Home extends Component {
 
   }
 
-  importUsers() {
+  removeUser() {
+    const {user,users} = this.state;
+    const removinUser = user;
+    users.splice(users.findIndex(user => user.id === removinUser.id), 1);
+    this.setState({users: users});
+  }
+
+importUsers() {
       AsyncStorage.getItem('users').then(function(strResult) {
         var result = JSON.parse(strResult) || {};
     });
@@ -73,24 +83,24 @@ update() {
     AsyncStorage.setItem('users', JSON.stringify(result));
 });
 }
+componentWillReceiveProps(nextProps) {
+  const { navigation } = nextProps;
+  const updatedUser = navigation.getParam('updatedUser', 'no user object');
+  
+  let users = this.state.users;
 
-componentDidUpdate() {
+  Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+
+    if(UserAPIService.getUpdateStatus()) {
+      UserAPIService.setStatus(false);
+      this.setState({users:users});
+    
+    }
 }
 
   render() {
 
-    const { navigation } = this.props;
-    const updatedUser = navigation.getParam('updatedUser', 'no user object');
-    
 
-    let users = this.state.users;
-    Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
-
-      if(UserAPIService.getUpdateStatus()) {
-        UserAPIService.setStatus(false);
-        this.setState({users:users});
-      
-      }
 
     return(
       <View style={styles.container}>

@@ -27,7 +27,9 @@ export default class UsersList extends Component {
     return(
 
     <FlatList 
+
       data          = {this.props.data}
+      extraData     = {this.props}
       keyExtractor  = {user => user.id.toString()}
       renderItem    = {this._renderItem}>
     </FlatList>
