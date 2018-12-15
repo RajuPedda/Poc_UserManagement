@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { Text, View, StyleSheet,Alert } from 'react-native';
-import { Container, Header, Left, 
-  Body, Right, Button, Icon, Title, Content , 
-  Input,Item, Form, Footer, FooterTab,
-  } from 'native-base';
-=======
 import { Text, View, StyleSheet,Alert,Button,TouchableHighlight,TextInput,TouchableOpacity } from 'react-native';
 import { Input} from 'react-native-elements';
->>>>>>> a17c5ef511e645d9ceb7ef7521ed577ddf62db86
 import {styles} from './styles';
 import { AsyncStorage } from "react-native";
 class AddUser extends Component {
@@ -138,8 +130,9 @@ class AddUser extends Component {
 
           </TouchableOpacity>
 
-        </Form>
       </View>
+    </View>
     )};
-  }
+    }
+  
 export default AddUser;

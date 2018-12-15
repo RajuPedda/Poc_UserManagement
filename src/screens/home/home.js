@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert,AsyncStorage} from 'react-native';
+import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight} from 'react-native';
 import UsersList from '../../components/home/usersList';
 
 import  UserApiService  from '../../services/userApiService'
 
-import {styles} from './styles';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+// import RNFileSelector from 'react-native-file-selector';
 
 class Home extends Component {
 
@@ -14,26 +13,18 @@ class Home extends Component {
 
     this.state = {
       users: [],
-      user: {},
-      fileUri: '',
-      fileType: '',
-      fileName: '',
-      fileSize: ''
-    };
+      user: {}
+    }
   }
 
   componentDidMount() {
     this.getUsers();
-    AsyncStorage.getItem('user', (err, result) => {
-      this.setState({user: JSON.parse(result)});
-      Alert.alert(this.state.user.firstName)
-    });
   }
 
   getUsers() {
 
-    UserApiService.getUsers().then((res) => this.setState({users:res})
-    );
+    var users = UserApiService.getUsers();
+    console.log(users);
     
   }
 
@@ -58,7 +49,7 @@ class Home extends Component {
   }
 
   importUsers() {
-   /*  DocumentPicker.show(
+   /*  RNFileSelector.Show(
       {
           title: 'Select File',
           onDone: (path) => {
@@ -69,53 +60,102 @@ class Home extends Component {
           }
       }
   ) */
-  AsyncStorage.getItem('user', (err, result) => {
-  this.setState({user: JSON.parse(result)});
-  Alert.alert(this.state.user.id)
-  });
   }
   render() {
     return(
-      <Container>
-        <Content>
-          <View>
+      <View style={styles.container}>
 
-            <UsersList 
-              data={this.state.users}
-              onSelectUser = {(user) => this.onSelectUserHandler(user)}>
-            </UsersList>
+        <View style= {styles.list}>
+          
+          <UsersList 
+            data         = {this.state.users}
+            onSelectUser = {(user) => this.onSelectUserHandler(user)}>
+          </UsersList>
 
+        </View>
+
+
+        <View style = {styles.footer}>
+
+          <View 
+            style = {styles.footerBackground}>
+
+            <TouchableHighlight>
+
+              <Button
+              onPress = {() => this.addUser()}
+              title = "Add User" />
+
+            </TouchableHighlight>
+
+            <TouchableHighlight   style = {styles.buttonUpdate}>
+
+              <Button
+                onPress = {() => this.updateUser()}
+                title = "Update"/>
+
+            </TouchableHighlight>
+
+            <TouchableHighlight style = {styles.buttonUpdate} >
+
+              <Button
+                onPress = {() => this.removeUser()}
+                title = "Remove"/>
+
+            </TouchableHighlight>
+            
           </View>
-        </Content>
-        <Footer 
-          style={styles.footerBackground}>
 
-          <Button
-            onPress={() => this.addUser()}>
-            <Text>Add User</Text>
-          </Button>
-          <Button
-            onPress={() => this.updateUser()}
-            style={styles.buttonUpdate}>
-            <Text>Update</Text>
-          </Button>
-          <Button
-            onPress={() => this.removeUser()}
-            style={styles.buttonUpdate}>
-            <Text>Remove</Text>
-          </Button>
-        </Footer>
+          <View 
+            style={styles.footerBackground}>
 
-        <Footer 
-          style={styles.footerBackground}>
-          <Button
-            onPress={() => this.importUsers()}
-            style={styles.buttonImport}>
-            <Text>Import Users</Text>
-          </Button>
-        </Footer>
-      </Container>
+            <TouchableHighlight   style = {styles.buttonImport}>
+               
+              <Button
+                onPress = {() => this.importUsers()}
+                title = "Import Users">
+              </Button>
+
+            </TouchableHighlight>
+             
+          </View>
+
+      </View>
+
+    </View>
     )};
   }
 
 export default Home;
+
+export const styles = StyleSheet.create({
+
+  container:{
+    flex: 1
+  },
+
+  list: {
+    flex: 0.8
+  },
+
+  footer: {
+    flex:0.2,
+  },
+
+  footerBackground: {
+    flexDirection: 'row',
+    justifyContent:'center',
+    marginTop: 10
+ 
+  },
+
+  buttonUpdate: {
+    marginLeft: 10
+  },
+
+  buttonImport: {
+    width: 250,
+    justifyContent:'center'
+  },
+
+});
