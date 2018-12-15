@@ -36,7 +36,6 @@ class Home extends Component {
     try {
         var users = await AsyncStorage.setItem('users', this.state.users);
         this.setState({users: users});
-        Alert.alert(users)
     } catch(e) {
     }
 
@@ -86,16 +85,14 @@ update() {
 componentWillReceiveProps(nextProps) {
   const { navigation } = nextProps;
   const updatedUser = navigation.getParam('updatedUser', 'no user object');
-  
+
   let users = this.state.users;
-
-  Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
-
-    if(UserAPIService.getUpdateStatus()) {
-      UserAPIService.setStatus(false);
-      this.setState({users:users});
-    
+  if(UserAPIService.getUpdateStatus()) {
+    UserAPIService.setStatus(false);
+    Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+    this.setState({users:users});
     }
+   
 }
 
   render() {
