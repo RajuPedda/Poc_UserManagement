@@ -1,32 +1,28 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet,Alert,Button,TouchableHighlight,TextInput,TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet,Alert,Button,TouchableHighlight, AsyncStorage} from 'react-native';
 import { Input} from 'react-native-elements';
 import {styles} from './styles';
-import { AsyncStorage } from "react-native";
+import UserAPIService from '../../services/userApiService';
+
 class AddUser extends Component {
 
   constructor(props) {
     super(props);
     this.state = { 
-  
-        id: '',
+      user: {
+        id: null,
         firstName: '',
         lastName: '',
         email: '',
         phone: ''
-      
+      }
     };
   }
   componentWillMount()  {
     const { navigation } = this.props;
     const user = navigation.getParam('user', 'no user Object');
     if(user!== this.state.user)
-    this.setState({id:user.id})
-    this.setState({firstName:user.firstName})
-    this.setState({lastName:user.lastName})
-    this.setState({email:user.email})
-    this.setState({phone:user.phone})
-
+    this.setState({user:user})
   }
   onChangeTextHandler(key, textValue) {
     let currentUser = Object.assign({}, this.state.user);
@@ -59,76 +55,81 @@ class AddUser extends Component {
       default:  return value
     }
   }
-  
   onSaveButton() {
 
     const user = {
-      "id":         this.state.id,
-      "firstName":  this.state.firstName,
-      "lastName":   this.state.lastName,
-      "email":      this.state.email,
-      "phone":      this.state.phone
+      "id":         this.state.user.id,
+      "firstName":  this.state.user.firstName,
+      "lastName":   this.state.user.lastName,
+      "email":      this.state.user.email,
+      "phone":      this.state.user.phone
     };
-    console.log(this.state.id)
-    try {
-       AsyncStorage.setItem('user', JSON.stringify(user));
-       this.props.navigation.navigate('Home');
-    }
 
-    catch (error) {
-    }
-
-    // this.props.navigation.navigate('Home');
+  /*   AsyncStorage.getItem('users').then(function(strResult) {
+            var result = JSON.parse(strResult) || {};
+            Object.assign(result, user);
+            AsyncStorage.setItem('users', JSON.stringify(result));
+    }); */
+   UserAPIService.setStatus(true);
+    this.props.navigation.navigate('Home',{'updatedUser': user});
   }
   OnCancelButton() {
+    this.setState({user: {}});
     this.props.navigation.navigate('Home');
   }
+  someFunction() {}
   render() {
     return(
       <View>
         <Input 
-          placeholder  = "Id" 
-          value        = {this.state.id}
-          onChangeText = {(id) => this.setState({id: id})}
+          placeholder  = "Id"
+          value        = {this.state.user.id}
+          onChangeText = {(id) => this.onChangeTextHandler('id', id)}
           inputContainerStyle= {styles.inputItem}/>
 
         <Input 
           placeholder  = "First Name" 
-          value        = {this.state.firstName}
-          // ref = {firstName => this.state.user.firstName = firstName}
-          onChangeText = {(firstName) => this.setState({firstName: firstName})}
+          value        = {this.state.user.firstName}
+          onChangeText = {(firstName) => this.onChangeTextHandler('firstName', firstName)}
           inputContainerStyle= {styles.inputItem}/>
 
         <Input 
           placeholder  = "Last Name"
-          value        = {this.state.lastName}
-          onChangeText = {(lastName) => this.setState({lastName: lastName})}
+          value        = {this.state.user.lastName}
+          onChangeText = {(lastName) => this.onChangeTextHandler('lastName', lastName)}
           inputContainerStyle= {styles.inputItem}/>
 
         <Input 
           placeholder  = "Email"
-          value        = {this.state.email}
-          onChangeText = {(email) => this.setState({email: email})}
+          value        = {this.state.user.email}
+          onChangeText = {(email) => this.onChangeTextHandler('email', email)}
           inputContainerStyle= {styles.inputItem}/>
 
         <Input 
           placeholder  = "Phone No"
-          value        = {this.state.phone}
-          onChangeText = {(phone) =>  this.setState({phone: phone})}
+          value        = {this.state.user.phone}
+          onChangeText = {(phone) => this.onChangeTextHandler('phone', phone)}
           inputContainerStyle= {styles.inputItem}
         />
         <View style={styles.buttonContainer}>
+          <TouchableHighlight   style = {styles.button}>
 
-          <TouchableOpacity   style = {styles.button}  onPress={()=> { this.onSaveButton()}}>
-            <Text>Save</Text>
+            <Button 
+              title="Save" 
+              onPress = {() => this.onSaveButton()}>
+            </Button>
 
-          </TouchableOpacity>
+          </TouchableHighlight>
 
-          <TouchableOpacity   style = {styles.button}  onPress = {() => this.OnCancelButton()}>
+          <TouchableHighlight   style = {styles.button}>
 
-            <Text>Cancel</Text>
+           <Button 
+            title= "Cancel" 
+            style   = {styles.button}
+            onPress = {() => this.OnCancelButton()}>
+          </Button>
 
-          </TouchableOpacity>
+          </TouchableHighlight>
 
       </View>
     </View>

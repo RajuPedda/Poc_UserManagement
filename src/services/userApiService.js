@@ -3,33 +3,46 @@ import UserData from '../fake-data/userData.json';
 import { AsyncStorage } from "react-native"
 const UserAPIService = {
 
+  _isUpdated : false,
+
  delayedResponse(ms, value) {
-   console.log(value);
     return new Promise(resolve => {
       setTimeout(() => resolve(value), ms);
     });
   },
-  myfunction (result){
-    return this.delayedResponse(500, JSON.parse(result));
-  },
 
-  getUsers() {
-    this.setUsers();
-   
+  getUpdateUsers(){
+    AsyncStorage.getItem('users');
+  },
+ 
+  updatedUsers(user) {
 
     AsyncStorage.getItem('users').then(function(strResult) {
       var result = JSON.parse(strResult) || {};
-      console.log(result);
-      return result;
+      Object.assign(result, updatedUser);
+      AsyncStorage.setItem('users', JSON.stringify(result));
       });
+  },
+
+   getUsers() {
+     
+    return this.delayedResponse(500, UserData);
+    },
+
+    getUpdateStatus(){
+      return this._isUpdated;
+    },
+
+    setStatus(value) {
+      this._isUpdated = value;
     },
   
-async setUsers() {
-  try {
-  var users = await AsyncStorage.setItem('users', UserData);
-  console.log(users);
-  } catch(e) {
-  }
+  async setUsers(users) {
+    try {
+    var users = await AsyncStorage.setItem('users', users);
+    console.log(users);
+    } catch(e) {
+    }
   }
 
 }

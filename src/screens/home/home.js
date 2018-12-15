@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight} from 'react-native';
 import UsersList from '../../components/home/usersList';
+import UserAPIService from '../../services/userApiService';
 
-import  UserApiService  from '../../services/userApiService'
 
 // import RNFileSelector from 'react-native-file-selector';
 
@@ -13,7 +13,8 @@ class Home extends Component {
 
     this.state = {
       users: [],
-      user: {}
+      user: {},
+      isUpdated : false
     }
   }
 
@@ -23,10 +24,22 @@ class Home extends Component {
 
   getUsers() {
 
-    var users = UserApiService.getUsers();
-    console.log(users);
+    UserAPIService.getUsers().then((res) => 
+    {
+      this.setState({users:res});
+    }
+    );
     
   }
+
+  async setUsers() {
+    try {
+        var users = await AsyncStorage.setItem('users', this.state.users);
+        this.setState({users: users});
+        Alert.alert(users)
+    } catch(e) {
+    }
+}
 
   addUser() {
     this.props.navigation.navigate('AddUser');
@@ -49,19 +62,36 @@ class Home extends Component {
   }
 
   importUsers() {
-   /*  RNFileSelector.Show(
-      {
-          title: 'Select File',
-          onDone: (path) => {
-              console.log('file selected: ' + path)
-          },
-          onCancel: () => {
-              console.log('cancelled')
-          }
-      }
-  ) */
+      AsyncStorage.getItem('users').then(function(strResult) {
+        var result = JSON.parse(strResult) || {};
+    });
   }
+update() {
+  AsyncStorage.getItem('users').then(function(strResult) {
+    var result = JSON.parse(strResult) || {};
+    Object.assign(result, user);
+    AsyncStorage.setItem('users', JSON.stringify(result));
+});
+}
+
+componentDidUpdate() {
+}
+
   render() {
+
+    const { navigation } = this.props;
+    const updatedUser = navigation.getParam('updatedUser', 'no user object');
+    
+
+    let users = this.state.users;
+    Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+
+      if(UserAPIService.getUpdateStatus()) {
+        UserAPIService.setStatus(false);
+        this.setState({users:users});
+      
+      }
+
     return(
       <View style={styles.container}>
 
