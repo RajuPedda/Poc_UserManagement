@@ -14,13 +14,18 @@ class AddUser extends Component {
         firstName: '',
         lastName: '',
         email: '',
-        phone: ''
+        phone: '',
+
+        isNewUser: false
       
     };
   }
   componentWillMount()  {
     const { navigation } = this.props;
     const user = navigation.getParam('user', 'no user Object');
+    if(user == 'no user Object'){
+      this.setState({isNewUser: true})
+    }
     console.log(user.length);
     this.setState({id:user.id})	 
     this.setState({firstName:user.firstName})	
@@ -75,7 +80,7 @@ class AddUser extends Component {
             AsyncStorage.setItem('users', JSON.stringify(result));
     }); */
    UserAPIService.setStatus(true);
-    this.props.navigation.navigate('Home',{'updatedUser': user});
+    this.props.navigation.navigate('Home',{'updatedUser': user,'isNewUser': this.state.isNewUser});
   }
   OnCancelButton() {
     this.setState({user: {}});

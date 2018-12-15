@@ -85,11 +85,19 @@ update() {
 componentWillReceiveProps(nextProps) {
   const { navigation } = nextProps;
   const updatedUser = navigation.getParam('updatedUser', 'no user object');
-
+  const isNewUser = navigation.getParam('isNewUser', false);
   let users = this.state.users;
   if(UserAPIService.getUpdateStatus()) {
     UserAPIService.setStatus(false);
+    if(isNewUser) {
+      users.push(updatedUser);
+      
+    }
+    else{
     Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+
+    }
+
     this.setState({users:users});
     }
    
