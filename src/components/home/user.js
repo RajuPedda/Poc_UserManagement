@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Alert, CheckBox } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
+import { CheckBox } from 'react-native-elements'
 
 export default class User extends Component {
   constructor(props) {
@@ -23,10 +24,16 @@ export default class User extends Component {
     return(
       <View style={styles.container}>
 
-        <CheckBox
+        {/* <CheckBox
           value         = {this.state.checked}
           onValueChange = {() => this.selectUser(user)}
-          style         = {styles.checkBox}/>
+          style         = {styles.checkBox}/> */}
+        <CheckBox
+          containerStyle = {styles.checkBox}
+          checked={this.state.checked}
+          onPress={() => this.selectUser(user)}
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'/>
 
         <Text style={styles.user_text}>{user.firstName}&nbsp;{user.lastName}</Text>
 
@@ -41,15 +48,15 @@ export const styles = StyleSheet.create({
     flex: 1, flexDirection: 'row',
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
-    marginTop: 25,
+    // marginTop: 25,
   },
 
   checkBox : {
-    marginTop: 2
+    backgroundColor: 'transparent'
   },
 
   user_text: {
-    marginTop: 5
+    marginTop: 15
   }
 
   });
