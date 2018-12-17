@@ -84,7 +84,7 @@ class AddUser extends Component {
   someFunction() {}
   render() {
     return(
-      <View>
+      <View style={styles.container}>
         <Input 
           placeholder  = "Id"
           value        = {this.state.id}

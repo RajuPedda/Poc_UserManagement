@@ -12,7 +12,6 @@ export default class User extends Component {
   
   selectUser(user) {
 
-    this.setState({checked: !this.state.checked});
     this.props.onSelectUser(user);
 
   }
@@ -48,7 +47,7 @@ export const styles = StyleSheet.create({
     flex: 1, flexDirection: 'row',
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
-    // marginTop: 25,
+    // marginTop: 20,
   },
 
   checkBox : {

@@ -25,14 +25,25 @@ export default class UsersList extends Component {
 
   render() {
     return(
+    <View style={styles.container}>
+      <FlatList 
 
-    <FlatList 
+        data          = {this.props.data}
+        extraData     = {this.props}
+        keyExtractor  = {user => user.id.toString()}
+        renderItem    = {this._renderItem}>
 
-      data          = {this.props.data}
-      extraData     = {this.props}
-      keyExtractor  = {user => user.id.toString()}
-      renderItem    = {this._renderItem}>
-    </FlatList>
+      </FlatList>
+    </View>
+
 
     )};
   }
+export const styles = StyleSheet.create({
+
+  container : {
+    marginTop: 20,
+  }
+
+
+  });
