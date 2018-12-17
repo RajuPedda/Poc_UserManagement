@@ -143,11 +143,13 @@ export default AddUser;
 
 export const styles = StyleSheet.create({
   container:{
-    flex: 1
+    flex: 1,
+    marginTop: 30,
   },
 
   inputItem: {
-    marginTop: 15
+    marginTop: 15,
+    marginLeft: 20
   },
   buttonContainer: {
     flex: 1, 
