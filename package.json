@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "simple-clean": "npm start -- --reset-cache",
+    "start-iPhone8": "react-native run-ios --simulator='iPhone 8 Plus'",
     "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start -- --reset-cache",
     "cache-run-build": "rm -rf ~/.rncache && rm -rf node_modules && npm install && react-native run-ios"
   },
