@@ -24,14 +24,14 @@ class AddUser extends Component {
     const { navigation } = this.props;
     const user = navigation.getParam('user', 'no user Object');
     if(user == 'no user Object'){
-      this.setState({isNewUser: true})
+      this.setState({isNewUser: true});
     }
     console.log(user.length);
-    this.setState({id:user.id})	 
-    this.setState({firstName:user.firstName})	
-    this.setState({lastName:user.lastName})	
-    this.setState({email:user.email})	
-    this.setState({phone:user.phone})
+    this.setState({id:user.id});
+    this.setState({firstName:user.firstName});
+    this.setState({lastName:user.lastName});	
+    this.setState({email:user.email});
+    this.setState({phone:user.phone});
   }
   onChangeTextHandler(key, textValue) {
     let currentUser = Object.assign({}, this.state.user);
@@ -61,7 +61,7 @@ class AddUser extends Component {
         this.setState({user:currentUser});
         break;
       }
-      default:  return value
+      default:  return value;
     }
   }
   onSaveButton() {
@@ -74,11 +74,6 @@ class AddUser extends Component {
       "phone":      this.state.phone
     };
 
-  /*   AsyncStorage.getItem('users').then(function(strResult) {
-            var result = JSON.parse(strResult) || {};
-            Object.assign(result, user);
-            AsyncStorage.setItem('users', JSON.stringify(result));
-    }); */
    UserAPIService.setStatus(true);
     this.props.navigation.navigate('Home',{'updatedUser': user,'isNewUser': this.state.isNewUser});
   }

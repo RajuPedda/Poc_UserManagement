@@ -33,11 +33,6 @@ class Home extends Component {
   }
 
   async setUsers() {
-    try {
-        var users = await AsyncStorage.setItem('users', this.state.users);
-        this.setState({users: users});
-    } catch(e) {
-    }
 
      UserAPIService.setStatus(true);
     this.props.navigation.navigate('Home',{'updatedUser': user});
@@ -65,23 +60,15 @@ class Home extends Component {
 
   removeUser() {
     const {user,users} = this.state;
-    const removinUser = user;
-    users.splice(users.findIndex(user => user.id === removinUser.id), 1);
+    const removingUser = user;
+    users.splice(users.findIndex(user => user.id === removingUser.id), 1);
     this.setState({users: users});
   }
 
 importUsers() {
-      AsyncStorage.getItem('users').then(function(strResult) {
-        var result = JSON.parse(strResult) || {};
-    });
+      
   }
-update() {
-  AsyncStorage.getItem('users').then(function(strResult) {
-    var result = JSON.parse(strResult) || {};
-    Object.assign(result, user);
-    AsyncStorage.setItem('users', JSON.stringify(result));
-});
-}
+
 componentWillReceiveProps(nextProps) {
   const { navigation } = nextProps;
   const updatedUser = navigation.getParam('updatedUser', 'no user object');
@@ -92,10 +79,8 @@ componentWillReceiveProps(nextProps) {
     if(isNewUser) {
       users.push(updatedUser);
       
-    }
-    else{
-    Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
-
+    } else {
+      Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
     }
 
     this.setState({users:users});
@@ -104,8 +89,6 @@ componentWillReceiveProps(nextProps) {
 }
 
   render() {
-
-
 
     return(
       <View style={styles.container}>
