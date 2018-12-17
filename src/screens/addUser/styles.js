@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   inputItem: {
-    marginTop: 15
+    marginTop: 15,
+    marginLeft: 20
   },
   buttonContainer: {
     flex: 1, 
@@ -15,8 +16,7 @@ export const styles = StyleSheet.create({
     height: 50, 
     marginRight: 20,
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 15,
+   
   },
   buttonText: {
     color: 'white'
