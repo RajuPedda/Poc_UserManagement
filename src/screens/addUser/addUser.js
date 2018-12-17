@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet,Alert,Button,TouchableHighlight, AsyncStorage} from 'react-native';
 import { Input} from 'react-native-elements';
-import {styles} from './styles';
 import UserAPIService from '../../services/userApiService';
 
 class AddUser extends Component {
@@ -84,7 +83,7 @@ class AddUser extends Component {
   someFunction() {}
   render() {
     return(
-      <View>
+      <View style={styles.container}>
         <Input 
           placeholder  = "Id"
           value        = {this.state.id}
@@ -141,3 +140,30 @@ class AddUser extends Component {
     }
   
 export default AddUser;
+
+export const styles = StyleSheet.create({
+  container:{
+    flex: 1
+  },
+
+  inputItem: {
+    marginTop: 15
+  },
+  buttonContainer: {
+    flex: 1, 
+    flexDirection: 'row',
+    marginTop: 30,
+    justifyContent: 'center'
+  },
+  button: {
+    width: 100, 
+    height: 70, 
+    marginRight: 20,
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 15,
+  },
+  buttonText: {
+    color: 'white'
+  }
+});
