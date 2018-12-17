@@ -42,7 +42,7 @@ export default class UsersList extends Component {
 export const styles = StyleSheet.create({
 
   container : {
-    marginTop: 20,
+    marginTop: 30,
   }
 
 
