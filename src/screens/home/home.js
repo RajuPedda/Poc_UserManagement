@@ -22,14 +22,32 @@ class Home extends Component {
     this.getUsers();
   }
 
-  getUsers() {
+  async componentWillMount() {
+    const users = await UserAPIService.getUsers();
+    console.log(users)
+    this.setState({users:users});
+  }
 
-    UserAPIService.getUsers().then((res) => 
-    {
-      this.setState({users:res});
-    }
-    );
-    
+  componentWillUpdate() {
+    console.log('will update');
+  }
+
+  componentDidUpdate() {
+    console.log('did update');
+  }
+  componentWillReceiveProps() {
+    console.log('receive props');
+  }
+  async getUsers() {
+
+    //  UserAPIService.getUsers().then((res) => 
+    // {
+    //   this.setState({users:res});
+    // }
+    //  );
+    const users = await UserAPIService.getUsers();
+    console.log(users)
+    this.setState({users:users});
   }
 
   async setUsers() {

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "549766470792",
+    "firebase_url": "https://user-management-reactnative.firebaseio.com",
+    "project_id": "user-management-reactnative",
+    "storage_bucket": "user-management-reactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549766470792:android:a40b903a2e6c6845",
+        "android_client_info": {
+          "package_name": "com.poc_usermanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549766470792-tsjc7r153prkndb6rb9o6j0emjepebcq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXv4OeORYfyD61PorDXTwQhS3yWaXOH5w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
