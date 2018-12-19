@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert} from 'react-native';
 import UsersList from '../../components/home/usersList';
 import UserAPIService from '../../services/userApiService';
-
+import firebase from 'react-native-firebase';
 
 // import RNFileSelector from 'react-native-file-selector';
 
@@ -10,8 +10,10 @@ class Home extends Component {
 
   constructor(props){
     super(props)
-
+    this.ref = firebase.firestore().collection('users'),
+    this.unsubscribe = null,
     this.state = {
+  
       users: [],
       user: {},
       isUpdated : false
@@ -22,39 +24,30 @@ class Home extends Component {
     this.getUsers();
   }
 
-  async componentWillMount() {
-    const users = await UserAPIService.getUsers();
-    console.log(users)
-    this.setState({users:users});
+  componentWillUnmount() {
+      this.unsubscribe();
+  }
+  getUsers(){
+  this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+
+  }
+  onCollectionUpdate = (querySnapshot) => {
+    const users = [];
+    querySnapshot.forEach((doc) => {
+      const { id, firstName,lastName,email,phone } = doc.data();
+      users.push({
+       id,
+        firstName, // DocumentSnapshot
+        lastName,
+        email,
+        phone
+      });
+    });
+    this.setState({ 
+      users: users
+   });
   }
 
-  componentWillUpdate() {
-    console.log('will update');
-  }
-
-  componentDidUpdate() {
-    console.log('did update');
-  }
-  componentWillReceiveProps() {
-    console.log('receive props');
-  }
-  async getUsers() {
-
-    //  UserAPIService.getUsers().then((res) => 
-    // {
-    //   this.setState({users:res});
-    // }
-    //  );
-    const users = await UserAPIService.getUsers();
-    console.log(users)
-    this.setState({users:users});
-  }
-
-  async setUsers() {
-
-     UserAPIService.setStatus(true);
-    this.props.navigation.navigate('Home',{'updatedUser': user});
-}
 
   addUser() {
     this.props.navigation.navigate('AddUser');
@@ -79,8 +72,10 @@ class Home extends Component {
   removeUser() {
     const {user,users} = this.state;
     const removingUser = user;
-    users.splice(users.findIndex(user => user.id === removingUser.id), 1);
-    this.setState({users: users});
+    UserAPIService.removeUser(removingUser);
+    this.getUsers();
+    // users.splice(users.findIndex(user => user.id === removingUser.id), 1);
+    // this.setState({users: users});
   }
 
 importUsers() {
@@ -95,13 +90,15 @@ componentWillReceiveProps(nextProps) {
   if(UserAPIService.getUpdateStatus()) {
     UserAPIService.setStatus(false);
     if(isNewUser) {
-      users.push(updatedUser);
+      UserAPIService.addUser(updatedUser);
+      // users.push(updatedUser);
       
     } else {
-      Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+      UserAPIService.updateUser(updatedUser);
+      // Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
     }
 
-    this.setState({users:users});
+    // this.setState({users:users});
     }
    
 }

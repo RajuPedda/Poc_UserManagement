@@ -24,11 +24,7 @@ const UserAPIService = {
       AsyncStorage.setItem('users', JSON.stringify(result));
       });
   },
-users() {
 
-  return firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate)
-
-},
 onCollectionUpdate(querySnapshot){
     const users = [];
     querySnapshot.forEach((doc) => {
@@ -47,12 +43,38 @@ onCollectionUpdate(querySnapshot){
   },
 
   getUsers() {
-    return firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate)
+    return firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate);
     // console.log(UserData);
      
     //  return this.delayedResponse(500, UserData);
-    },
+  },
    
+  addUser(user) {
+    firebase.firestore().collection("users").doc(user.id)
+    .set({ id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phone: user.phone,
+            email: user.email }) .then((ref)=>{ console.log(ref) });
+  },
+
+  removeUser(user) {
+
+    firebase.firestore().collection("users").doc(user.id)
+    .delete().then((ref)=>{ console.log(ref) });
+  
+
+  },
+
+  updateUser(user) {
+    firebase.firestore().collection("users").doc(user.id)
+    .update({ id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phone: user.phone,
+            email: user.email }) .then((ref)=>{ console.log(ref) });
+  },
+
 
     getUpdateStatus(){
       return this._isUpdated;
