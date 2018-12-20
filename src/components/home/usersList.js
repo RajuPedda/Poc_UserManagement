@@ -6,9 +6,9 @@ import User from './user';
 
 export default class UsersList extends Component {
 
-  onSelectUser(user) {
+  onSelectUser(user,checked) {
 
-    this.props.onSelectUser(user);
+    this.props.onSelectUser(user,checked);
 
   }
   
@@ -18,7 +18,7 @@ export default class UsersList extends Component {
       id            = {item.id}
       user          = {item}
       userName      = {item.firstName}
-      onSelectUser  = {(user) => this.onSelectUser(user)}>
+      onSelectUser  = {(user,checked) => this.onSelectUser(user,checked)}>
     </User>
 
   )
@@ -30,7 +30,7 @@ export default class UsersList extends Component {
 
         data          = {this.props.data}
         extraData     = {this.props}
-        keyExtractor  = {user => user.id.toString()}
+        keyExtractor  = {user => user.id}
         renderItem    = {this._renderItem}>
 
       </FlatList>

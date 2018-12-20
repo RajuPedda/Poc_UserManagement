@@ -10,13 +10,13 @@ class Home extends Component {
 
   constructor(props){
     super(props)
-    this.ref = firebase.firestore().collection('users'),
+    this.ref = firebase.firestore().collection('users'), //firestore reference
     this.unsubscribe = null,
     this.state = {
-  
       users: [],
       user: {},
-      isUpdated : false
+      isUpdated : false,
+      isDisabled: true,
     }
   }
 
@@ -27,10 +27,12 @@ class Home extends Component {
   componentWillUnmount() {
       this.unsubscribe();
   }
+
   getUsers(){
   this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
 
   }
+
   onCollectionUpdate = (querySnapshot) => {
     const users = [];
     querySnapshot.forEach((doc) => {
@@ -48,16 +50,25 @@ class Home extends Component {
    });
   }
 
-
+  //add user navigation
   addUser() {
     this.props.navigation.navigate('AddUser');
   }
 
+  //update user navigation
   updateUser() {
     const {user} = this.state;
     this.props.navigation.navigate('AddUser',{'user': user});
   }
-  onSelectUserHandler(user) {
+
+  //on selection of user
+  onSelectUserHandler(user,ischecked) {
+    if(!ischecked) {
+    this.setState({isDisabled: false})
+
+    } else {
+      this.setState({isDisabled: true})
+    }
 
     let currentUser       = Object.assign({}, this.state.user);
     currentUser.id        = user.id;
@@ -69,6 +80,7 @@ class Home extends Component {
 
   }
 
+  //remove user from cloud fire store
   removeUser() {
     const {user,users} = this.state;
     const removingUser = user;
@@ -77,31 +89,28 @@ class Home extends Component {
     // users.splice(users.findIndex(user => user.id === removingUser.id), 1);
     // this.setState({users: users});
   }
+ 
 
-importUsers() {
-      
+  componentWillReceiveProps(nextProps) {
+    const { navigation } = nextProps;
+    const updatedUser = navigation.getParam('updatedUser', 'no user object');
+    const isNewUser = navigation.getParam('isNewUser', false);
+    let users = this.state.users;
+    if(UserAPIService.getUpdateStatus()) {
+      UserAPIService.setStatus(false);
+      if(isNewUser) {
+        UserAPIService.addUser(updatedUser);
+        // users.push(updatedUser);
+        
+      } else {
+        UserAPIService.updateUser(updatedUser);
+        // Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
+      }
+
+      // this.setState({users:users});
+      }
+    
   }
-
-componentWillReceiveProps(nextProps) {
-  const { navigation } = nextProps;
-  const updatedUser = navigation.getParam('updatedUser', 'no user object');
-  const isNewUser = navigation.getParam('isNewUser', false);
-  let users = this.state.users;
-  if(UserAPIService.getUpdateStatus()) {
-    UserAPIService.setStatus(false);
-    if(isNewUser) {
-      UserAPIService.addUser(updatedUser);
-      // users.push(updatedUser);
-      
-    } else {
-      UserAPIService.updateUser(updatedUser);
-      // Object.assign(users, users.map(user=> user.id === updatedUser.id? updatedUser : user))
-    }
-
-    // this.setState({users:users});
-    }
-   
-}
 
   render() {
 
@@ -112,7 +121,7 @@ componentWillReceiveProps(nextProps) {
           
           <UsersList 
             data         = {this.state.users}
-            onSelectUser = {(user) => this.onSelectUserHandler(user)}>
+            onSelectUser = {(user,isChecked) => this.onSelectUserHandler(user,isChecked)}>
           </UsersList>
 
         </View>
@@ -131,11 +140,12 @@ componentWillReceiveProps(nextProps) {
 
             </TouchableHighlight>
 
-            <TouchableHighlight   style = {styles.buttonUpdate}>
+            <TouchableHighlight   style = {styles.buttonUpdate} >
 
               <Button
                 onPress = {() => this.updateUser()}
-                title = "Update"/>
+                title = "Update"
+                disabled={this.state.isDisabled}/>
 
             </TouchableHighlight>
 
@@ -143,7 +153,8 @@ componentWillReceiveProps(nextProps) {
 
               <Button
                 onPress = {() => this.removeUser()}
-                title = "Remove"/>
+                title = "Remove"
+                disabled={this.state.isDisabled}/>
 
             </TouchableHighlight>
             

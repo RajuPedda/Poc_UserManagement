@@ -10,9 +10,9 @@ export default class User extends Component {
     }
   }
   
-  selectUser(user) {
+  selectUser(user,isChecked) {
     this.setState({checked: !this.state.checked})
-    this.props.onSelectUser(user);
+    this.props.onSelectUser(user, isChecked);
 
   }
 
@@ -30,7 +30,7 @@ export default class User extends Component {
         <CheckBox
           containerStyle = {styles.checkBox}
           checked={this.state.checked}
-          onPress={() => this.selectUser(user)}
+          onPress={() => this.selectUser(user,this.state.checked)}
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'/>
 
@@ -58,4 +58,4 @@ export const styles = StyleSheet.create({
     marginTop: 15
   }
 
-  });
+});

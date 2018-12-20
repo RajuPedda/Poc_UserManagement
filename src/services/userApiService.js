@@ -17,15 +17,14 @@ const UserAPIService = {
   },
  
   updatedUsers(user) {
-
     AsyncStorage.getItem('users').then(function(strResult) {
       var result = JSON.parse(strResult) || {};
       Object.assign(result, updatedUser);
       AsyncStorage.setItem('users', JSON.stringify(result));
-      });
+    });
   },
 
-onCollectionUpdate(querySnapshot){
+  onCollectionUpdate(querySnapshot){
     const users = [];
     querySnapshot.forEach((doc) => {
       const { id, firstName, lastName,phone,email } = doc.data();
@@ -37,12 +36,11 @@ onCollectionUpdate(querySnapshot){
         phone,
       });
     });
-    console.log(users)
-
     return users;
   },
 
   getUsers() {
+    
     return firebase.firestore().collection('users').onSnapshot(this.onCollectionUpdate);
     // console.log(UserData);
      
@@ -51,11 +49,13 @@ onCollectionUpdate(querySnapshot){
    
   addUser(user) {
     firebase.firestore().collection("users").doc(user.id)
-    .set({ id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            phone: user.phone,
-            email: user.email }) .then((ref)=>{ console.log(ref) });
+    .set({ 
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          email: user.email }) .then((ref)=>{ console.log(ref)
+        });
   },
 
   removeUser(user) {
@@ -76,13 +76,13 @@ onCollectionUpdate(querySnapshot){
   },
 
 
-    getUpdateStatus(){
-      return this._isUpdated;
-    },
+  getUpdateStatus(){
+    return this._isUpdated;
+  },
 
-    setStatus(value) {
-      this._isUpdated = value;
-    },
+  setStatus(value) {
+    this._isUpdated = value;
+  },
   
   async setUsers(users) {
     try {
