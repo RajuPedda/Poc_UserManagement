@@ -3,7 +3,8 @@ import { View, StyleSheet,ScrollView, Button, Text, TouchableHighlight,Alert} fr
 import UsersList from '../../components/home/usersList';
 import UserAPIService from '../../services/userApiService';
 import firebase from 'react-native-firebase';
-
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+// let fs = require('fs');
 // import RNFileSelector from 'react-native-file-selector';
 
 class Home extends Component {
@@ -17,6 +18,7 @@ class Home extends Component {
       user: {},
       isUpdated : false,
       isDisabled: true,
+      uri: ''
     }
   }
 
@@ -89,7 +91,17 @@ class Home extends Component {
     // users.splice(users.findIndex(user => user.id === removingUser.id), 1);
     // this.setState({users: users});
   }
- 
+
+  importUsers() {
+    DocumentPicker.show({
+      filetype: [DocumentPickerUtil.allFiles()],
+    },(error,res) => {
+
+    });
+
+  }
+
+
 
   componentWillReceiveProps(nextProps) {
     const { navigation } = nextProps;
@@ -210,6 +222,6 @@ export const styles = StyleSheet.create({
   buttonImport: {
     width: 250,
     justifyContent:'center'
-  },
+  }
 
 });
